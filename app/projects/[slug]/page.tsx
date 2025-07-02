@@ -2,15 +2,11 @@ import { notFound } from "next/navigation";
 import { projects, getProjectImages } from "../../data/projects";
 import { Carousel } from "../../components/Carousel";
 
-interface ProjectPageProps {
-  params: { slug: string };
-}
-
 export async function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
 
-export default function ProjectPage({ params }: ProjectPageProps) {
+export default function ProjectPage({ params }: { params: { slug: string } }) {
   const project = projects.find((p) => p.slug === params.slug);
   if (!project) return notFound();
 
