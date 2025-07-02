@@ -1,0 +1,24 @@
+"use client";
+import Image from "next/image";
+
+const PARKING_GARAGE_IMAGE = {
+  src: "https://res.cloudinary.com/djyf3amae/image/upload/v1712046709/goldenroof_ahmacw.jpg",
+  alt: "Parking Garage Roof",
+};
+
+export default function HomePage() {
+  return (
+    <section className="w-full min-h-screen flex items-center justify-center bg-white px-4">
+      <div className="relative aspect-[4/3] w-full max-w-4xl overflow-hidden shadow-lg border border-[8px] sm:border-[12px] md:border-[15px] lg:border-[20px] border-[#f9f9f9]">
+        <Image
+          src={PARKING_GARAGE_IMAGE.src}
+          alt={PARKING_GARAGE_IMAGE.alt}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover"
+          priority
+        />
+      </div>
+    </section>
+  );
+}
