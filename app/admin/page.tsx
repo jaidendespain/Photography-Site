@@ -9,64 +9,9 @@ function AdminContent() {
 
   useEffect(() => {
     if (authed) {
-      // Load Decap CMS
+      // Load Decap CMS and use the static config file
       import("decap-cms-app").then((CMS) => {
-        CMS.default.init({
-          config: {
-            backend: {
-              name: "git-gateway",
-              branch: "main",
-            },
-            local_backend: true,
-            media_folder: "public/images",
-            public_folder: "/images",
-            collections: [
-              {
-                name: "projects",
-                label: "Projects",
-                folder: "app/data",
-                create: true,
-                slug: "{{slug}}",
-                fields: [
-                  { label: "Title", name: "title", widget: "string" },
-                  { label: "Slug", name: "slug", widget: "string" },
-                  { label: "Description", name: "description", widget: "text", required: false },
-                  { label: "Featured", name: "featured", widget: "boolean", default: false },
-                  { label: "Order", name: "order", widget: "number", default: 0 },
-                ],
-              },
-              {
-                name: "images",
-                label: "Images",
-                folder: "app/data/images",
-                create: true,
-                slug: "{{slug}}",
-                fields: [
-                  { label: "Title", name: "title", widget: "string" },
-                  { label: "Slug", name: "slug", widget: "string" },
-                  { label: "Image URL", name: "src", widget: "string" },
-                  { label: "Alt Text", name: "alt", widget: "string" },
-                  { 
-                    label: "Aspect Ratio", 
-                    name: "aspect", 
-                    widget: "select", 
-                    options: ["aspect-[4/3]", "aspect-square", "aspect-[16/9]", "aspect-[3/4]"], 
-                    default: "aspect-[4/3]" 
-                  },
-                  { 
-                    label: "Project", 
-                    name: "project", 
-                    widget: "relation", 
-                    collection: "projects", 
-                    search_fields: ["title", "slug"], 
-                    value_field: "slug" 
-                  },
-                  { label: "Order", name: "order", widget: "number", default: 0 },
-                ],
-              },
-            ],
-          },
-        });
+        CMS.default.init(); // Loads config from /admin/config.yml by default
       });
     }
   }, [authed]);

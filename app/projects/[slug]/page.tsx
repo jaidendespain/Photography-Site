@@ -3,7 +3,7 @@ import { projects, getProjectImages } from "../../data/projects";
 import { Carousel } from "../../components/Carousel";
 
 export async function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return projects.map((project) => ({ params: { slug: project.slug } }));
 }
 
 export default function ProjectPage({ params }: { params: { slug: string } }) {
