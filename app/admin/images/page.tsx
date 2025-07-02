@@ -2,21 +2,6 @@
 import { useState } from "react";
 import { AuthProvider, useAuth } from "../AuthContext";
 
-// Example project list (replace with import if needed)
-const PROJECTS = [
-  { slug: "mountain-escape", title: "Mountain Escape" },
-  { slug: "urban-nights", title: "Urban Nights" },
-];
-
-const initialImages = [
-  {
-    src: "https://res.cloudinary.com/djyf3amae/image/upload/v1712046709/goldenroof_ahmacw.jpg",
-    alt: "Parking Garage Roof",
-    aspect: "aspect-[4/3]",
-    project: "mountain-escape",
-  },
-];
-
 function AdminImagesContent() {
   // Projects state
   const [projects, setProjects] = useState([
