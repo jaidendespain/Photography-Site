@@ -10,6 +10,11 @@ backend:
 media_folder: "public/images"
 public_folder: "/images"
 
+media_library:
+  name: uploadcare
+  config:
+    publicKey: demo
+
 collections:
   - name: "projects"
     label: "Projects"

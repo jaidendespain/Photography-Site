@@ -4,7 +4,7 @@ import { Header } from "./components/Header";
 
 export const metadata: Metadata = {
   title: "Jaiden Despain",
-  description: "My personal photography gallery.",
+  description: "a photography gallery.",
 };
 
 export default function RootLayout({

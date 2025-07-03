@@ -10,15 +10,16 @@ interface CarouselProps {
 }
 
 export function Carousel({ images, initialIndex = 0, onIndexChange }: CarouselProps) {
+  // All hooks must be called first
   const [idx, setIdx] = useState(initialIndex);
   const prevIdx = useRef(idx);
   const direction = idx > prevIdx.current ? 1 : -1;
+
   useEffect(() => {
     prevIdx.current = idx;
     onIndexChange?.(idx);
   }, [idx, onIndexChange]);
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") setIdx((i) => (i + 1) % images.length);
@@ -28,7 +29,6 @@ export function Carousel({ images, initialIndex = 0, onIndexChange }: CarouselPr
     return () => window.removeEventListener("keydown", handleKey);
   }, [images.length]);
 
-  // Swipe support
   const startX = useRef<number | null>(null);
   const handleTouchStart = (e: React.TouchEvent) => {
     startX.current = e.touches[0].clientX;
@@ -40,6 +40,15 @@ export function Carousel({ images, initialIndex = 0, onIndexChange }: CarouselPr
     if (dx < -50) setIdx((i) => (i + 1) % images.length);
     startX.current = null;
   };
+
+  // Now do the early return
+  if (!images || images.length === 0) {
+    return (
+      <div className="w-full text-center text-gray-500 py-12">
+        No images available for this project.
+      </div>
+    );
+  }
 
   return (
     <section

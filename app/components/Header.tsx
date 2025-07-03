@@ -4,8 +4,8 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
+  { href: "/", label: "Entry" },
   { href: "/projects", label: "Projects" },
-  { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -14,8 +14,8 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="w-full bg-white/80 absolute top-0 left-0 z-30">
-      <nav className="flex items-center justify-between w-full px-14 pt-8 pb-4">
+    <header className="w-full absolute top-0 left-0 z-30">
+      <nav className="flex items-center justify-between w-full px-6 sm:px-8 md:px-14 pt-6 md:pt-8 pb-4">
         <Link href="/" className="font-serif italic text-2xl font-bold tracking-tight">
           Jaiden Despain
         </Link>

@@ -3,14 +3,15 @@ import { projects, getProjectImages } from "../../data/projects";
 import { Carousel } from "../../components/Carousel";
 
 export async function generateStaticParams() {
-  return projects.map((project) => ({ params: { slug: project.slug } }));
+  return projects.map((project) => ({ slug: project.slug }));
 }
 
-export default function ProjectPage({ params }: { params: { slug: string } }) {
-  const project = projects.find((p) => p.slug === params.slug);
+export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
   if (!project) return notFound();
 
-  const images = getProjectImages(params.slug);
+  const images = getProjectImages(slug);
 
   return (
     <section className="max-w-4xl mx-auto px-4 py-12">

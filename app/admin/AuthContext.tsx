@@ -7,6 +7,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authed, setAuthed] = useState(false);
 
   function login(pw: string) {
+    // Note: This is a client-side only auth for demo purposes
+    // In production, this should be handled server-side with proper authentication
     if (pw === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
       setAuthed(true);
       return true;

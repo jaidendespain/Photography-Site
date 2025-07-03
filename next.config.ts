@@ -15,7 +15,8 @@ const nextConfig: NextConfig = {
   },
   /* config options here */
   typescript: {
-    ignoreBuildErrors: true,
+    // Enable TypeScript checking for better code quality
+    ignoreBuildErrors: false,
   },
 };
 

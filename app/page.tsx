@@ -8,8 +8,8 @@ const PARKING_GARAGE_IMAGE = {
 
 export default function HomePage() {
   return (
-    <section className="w-full min-h-screen flex items-center justify-center bg-white px-4">
-      <div className="relative aspect-[4/3] w-full max-w-4xl overflow-hidden shadow-lg border border-[8px] sm:border-[12px] md:border-[15px] lg:border-[20px] border-[#f9f9f9]">
+    <section className="w-full min-h-screen flex items-center justify-center px-4">
+      <div className="relative aspect-[4/3] w-full max-w-4xl overflow-hidden shadow-md border border-[8px] sm:border-[12px] md:border-[15px] lg:border-[20px] border-white">
         <Image
           src={PARKING_GARAGE_IMAGE.src}
           alt={PARKING_GARAGE_IMAGE.alt}
