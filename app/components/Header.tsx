@@ -31,9 +31,9 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-base font-medium transition-colors ${
+                className={`navbar-font text-base font-medium transition-colors ${
                   pathname === link.href
-                    ? "underline underline-offset-6 decoration-1"
+                    ? "underline underline-offset-6 decoration-[var(--color-underline)] decoration-2"
                     : ""
                 }`}
               >
@@ -60,7 +60,7 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-lg font-medium hover:underline underline-offset-4 transition-colors"
+                  className="navbar-font text-lg font-medium hover:underline underline-offset-4 transition-colors"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}

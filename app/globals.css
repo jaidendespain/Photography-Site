@@ -8,6 +8,7 @@
   --color-caption: #6b7280;
   --background: #ffffff;
   --foreground: #171717;
+  --color-underline: #616161; 
 
   --gray-100: #f9f9f9;
 }
@@ -44,4 +45,18 @@ h1, h2, h3, h4, h5, h6 {
 .title-font {
   font-family: 'LibreBodoni', serif;
   font-style: italic;
+}
+
+/* Custom font for navbar */
+@font-face {
+  font-family: 'JosefinSans';
+  src: url('/fonts/Josefin_Sans/JosefinSans-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Custom navbar class */
+.navbar-font {
+  font-family: 'JosefinSans', sans-serif;
 }
