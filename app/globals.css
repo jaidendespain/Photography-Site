@@ -30,3 +30,18 @@ h1, h2, h3, h4, h5, h6 {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom font for title */
+@font-face {
+  font-family: 'LibreBodoni';
+  src: url('/fonts/Libre_Bodoni/LibreBodoni-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Custom title class */
+.title-font {
+  font-family: 'LibreBodoni', serif;
+  font-style: italic;
+}

@@ -17,7 +17,7 @@ export function Header() {
       {/* Name in top left */}
       <header className="w-full absolute top-0 left-0 z-30">
         <div className="px-6 sm:px-8 md:px-14 pt-6 md:pt-8">
-          <Link href="/" className="font-serif italic text-2xl font-bold tracking-tight">
+          <Link href="/" className="title-font text-2xl tracking-tight">
             Jaiden Despain
           </Link>
         </div>
