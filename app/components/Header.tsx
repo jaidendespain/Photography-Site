@@ -35,9 +35,13 @@ export function Header() {
       const navRect = navElement.getBoundingClientRect();
       const linkRect = targetLink.getBoundingClientRect();
       
+      // Account for the padding (12px on each side, 8px top/bottom)
+      const paddingLeft = 12;
+      const paddingRight = 12;
+      
       setUnderlineStyle({
-        left: linkRect.left - navRect.left,
-        width: linkRect.width,
+        left: (linkRect.left - navRect.left) + paddingLeft,
+        width: linkRect.width - (paddingLeft + paddingRight),
       });
     }
   }, [hoveredIndex, isNavHovered, currentIndex, pathname]);
@@ -71,10 +75,11 @@ export function Header() {
           >
             {/* Sliding underline */}
             <div
-              className="absolute bottom-0 h-0.5 transition-all duration-300 ease-in-out"
+              className="absolute h-0.5 transition-all duration-300 ease-in-out"
               style={{
                 left: `${underlineStyle.left}px`,
                 width: `${underlineStyle.width}px`,
+                bottom: '5px',
                 backgroundColor: isNightLightsPage ? 'var(--night-text)' : 'var(--color-underline)',
               }}
             />
@@ -91,9 +96,11 @@ export function Header() {
                   ref={(el) => {
                     linkRefs.current[index] = el;
                   }}
-                  className="navbar-font text-base font-medium transition-colors relative"
+                  className="navbar-font text-base font-medium transition-colors relative block"
                   style={{ 
                     color: isNightLightsPage ? 'var(--night-text)' : 'inherit',
+                    padding: '8px 12px',
+                    margin: '-8px -12px',
                   }}
                   onMouseEnter={() => setHoveredIndex(index)}
                 >
@@ -136,9 +143,13 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="navbar-font text-lg font-medium hover:underline underline-offset-4 transition-colors"
+                  className="navbar-font text-lg font-medium hover:underline underline-offset-4 transition-colors block"
                   onClick={() => setMenuOpen(false)}
-                  style={{ color: isNightLightsPage ? 'var(--night-text)' : 'inherit' }}
+                  style={{ 
+                    color: isNightLightsPage ? 'var(--night-text)' : 'inherit',
+                    padding: '8px 12px',
+                    margin: '-8px -12px',
+                  }}
                 >
                   {link.label}
                 </Link>
