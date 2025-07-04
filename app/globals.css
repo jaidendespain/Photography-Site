@@ -13,93 +13,20 @@
   --gray-100: #f9f9f9;
   --night-bg: #171717;
   --night-text: #f9f9f9;
-
-  /* Transition speed variable */
-  --transition-speed: 0.25s;
 }
 
 body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: Arial, Helvetica, sans-serif;
-  /* Add smooth transitions for background and text color changes */
-  transition: background-color var(--transition-speed) ease-in-out, color var(--transition-speed) ease-in-out;
-}
-
-/* Night theme class for the Night Lights page */
-body.night-theme {
-  background: var(--night-bg);
-  color: var(--night-text);
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-title);
-  /* Add transition for heading colors */
-  transition: color var(--transition-speed) ease-in-out;
-}
-
-body.night-theme h1,
-body.night-theme h2,
-body.night-theme h3,
-body.night-theme h4,
-body.night-theme h5,
-body.night-theme h6 {
-  color: var(--night-text);
 }
 
 .caption, .text-caption {
   color: var(--color-caption);
-  /* Add transition for caption colors */
-  transition: color var(--transition-speed) ease-in-out;
-}
-
-body.night-theme .caption,
-body.night-theme .text-caption {
-  color: #9ca3af;
-}
-
-/* Navbar text color classes */
-.navbar-text {
-  color: var(--color-text);
-  transition: color var(--transition-speed) ease-in-out;
-}
-
-body.night-theme .navbar-text {
-  color: var(--night-text);
-}
-
-/* Title text color classes */
-.title-text {
-  color: var(--color-title);
-  transition: color var(--transition-speed) ease-in-out;
-}
-
-body.night-theme .title-text {
-  color: var(--night-text);
-}
-
-/* Underline color classes */
-.navbar-underline {
-  background-color: var(--color-underline);
-  transition: background-color var(--transition-speed) ease-in-out, left 0.3s ease-in-out, width 0.3s ease-in-out;
-  position: absolute;
-  bottom: 0;
-  height: 2px;
-  z-index: 1;
-}
-
-body.night-theme .navbar-underline {
-  background-color: var(--night-text);
-}
-
-/* Mobile menu button color classes */
-.mobile-menu-button {
-  background-color: #000;
-  transition: background-color var(--transition-speed) ease-in-out;
-}
-
-body.night-theme .mobile-menu-button {
-  background-color: var(--night-text);
 }
 
 /* Existing Tailwind base styles */
