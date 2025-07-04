@@ -13,7 +13,7 @@
     "ajv-errors": "^3.0.0",
     "ajv-keywords": "^5.1.0",
     "framer-motion": "^12.22.0",
-    "next": "^15.3.4",
+    "next": "^15.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
