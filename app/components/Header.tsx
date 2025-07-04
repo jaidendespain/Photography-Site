@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { m } from "framer-motion";
 
 const NAV_LINKS = [
   { href: "/", label: "Entry" },
@@ -16,7 +17,6 @@ export function Header() {
   const [isNavHovered, setIsNavHovered] = useState(false);
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
   const pathname = usePathname();
-  const isNightLightsPage = pathname === "/night-lights";
   const navRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
@@ -25,20 +25,25 @@ export function Header() {
 
   // Update underline position
   useEffect(() => {
-    // Only show hovered index if we're hovering over the nav area
-    const targetIndex = (isNavHovered && hoveredIndex !== null) ? hoveredIndex : currentIndex;
-    const targetLink = linkRefs.current[targetIndex];
-    const navElement = navRef.current;
+    // Add a small delay to ensure DOM elements are ready after theme changes
+    const timer = setTimeout(() => {
+      // Only show hovered index if we're hovering over the nav area
+      const targetIndex = (isNavHovered && hoveredIndex !== null) ? hoveredIndex : currentIndex;
+      const targetLink = linkRefs.current[targetIndex];
+      const navElement = navRef.current;
 
-    if (targetLink && navElement) {
-      const navRect = navElement.getBoundingClientRect();
-      const linkRect = targetLink.getBoundingClientRect();
-      
-      setUnderlineStyle({
-        left: linkRect.left - navRect.left,
-        width: linkRect.width,
-      });
-    }
+      if (targetLink && navElement) {
+        const navRect = navElement.getBoundingClientRect();
+        const linkRect = targetLink.getBoundingClientRect();
+        
+        setUnderlineStyle({
+          left: linkRect.left - navRect.left,
+          width: linkRect.width,
+        });
+      }
+    }, 50); // Small delay to ensure theme transition is complete
+
+    return () => clearTimeout(timer);
   }, [hoveredIndex, isNavHovered, currentIndex, pathname]);
 
   return (
@@ -48,8 +53,7 @@ export function Header() {
         <div className="px-6 sm:px-8 md:px-14 pt-6 md:pt-8">
           <Link 
             href="/" 
-            className="title-font text-2xl tracking-tight"
-            style={{ color: isNightLightsPage ? 'var(--night-text)' : 'inherit' }}
+            className="title-font text-2xl tracking-tight title-text"
           >
             Jaiden Despain
           </Link>
@@ -70,29 +74,31 @@ export function Header() {
           >
             {/* Sliding underline */}
             <div
-              className="absolute bottom-0 h-0.5 transition-all duration-300 ease-in-out"
+              className="absolute bottom-0 h-0.5 transition-all duration-300 ease-in-out navbar-underline"
               style={{
                 left: `${underlineStyle.left}px`,
                 width: `${underlineStyle.width}px`,
-                backgroundColor: isNightLightsPage ? 'var(--night-text)' : 'var(--color-underline)',
               }}
             />
             
             {NAV_LINKS.map((link, index) => (
-              <Link
+              <m.div
                 key={link.href}
-                href={link.href}
-                ref={(el) => {
-                  linkRefs.current[index] = el;
-                }}
-                className="navbar-font text-base font-medium transition-colors relative"
-                style={{ 
-                  color: isNightLightsPage ? 'var(--night-text)' : 'inherit',
-                }}
-                onMouseEnter={() => setHoveredIndex(index)}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
               >
-                {link.label}
-              </Link>
+                <Link
+                  href={link.href}
+                  ref={(el) => {
+                    linkRefs.current[index] = el;
+                  }}
+                  className="navbar-font text-base font-medium transition-colors relative navbar-text"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                >
+                  {link.label}
+                </Link>
+              </m.div>
             ))}
           </div>
           {/* Mobile menu button */}
@@ -101,18 +107,9 @@ export function Header() {
             aria-label="Open menu"
             onClick={() => setMenuOpen((v) => !v)}
           >
-            <span 
-              className="block w-6 h-0.5 mb-1" 
-              style={{ backgroundColor: isNightLightsPage ? 'var(--night-text)' : '#000' }}
-            />
-            <span 
-              className="block w-6 h-0.5 mb-1" 
-              style={{ backgroundColor: isNightLightsPage ? 'var(--night-text)' : '#000' }}
-            />
-            <span 
-              className="block w-6 h-0.5" 
-              style={{ backgroundColor: isNightLightsPage ? 'var(--night-text)' : '#000' }}
-            />
+            <span className="block w-6 h-0.5 mb-1 mobile-menu-button" />
+            <span className="block w-6 h-0.5 mb-1 mobile-menu-button" />
+            <span className="block w-6 h-0.5 mobile-menu-button" />
           </button>
         </nav>
         {/* Mobile menu */}
@@ -123,9 +120,8 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="navbar-font text-lg font-medium hover:underline underline-offset-4 transition-colors"
+                  className="navbar-font text-lg font-medium hover:underline underline-offset-4 transition-colors navbar-text"
                   onClick={() => setMenuOpen(false)}
-                  style={{ color: isNightLightsPage ? 'var(--night-text)' : 'inherit' }}
                 >
                   {link.label}
                 </Link>
