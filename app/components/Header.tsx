@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
@@ -12,8 +12,34 @@ const NAV_LINKS = [
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isNavHovered, setIsNavHovered] = useState(false);
+  const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
   const pathname = usePathname();
   const isNightLightsPage = pathname === "/night-lights";
+  const navRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+
+  // Find current page index
+  const currentIndex = NAV_LINKS.findIndex(link => link.href === pathname);
+
+  // Update underline position
+  useEffect(() => {
+    // Only show hovered index if we're hovering over the nav area
+    const targetIndex = (isNavHovered && hoveredIndex !== null) ? hoveredIndex : currentIndex;
+    const targetLink = linkRefs.current[targetIndex];
+    const navElement = navRef.current;
+
+    if (targetLink && navElement) {
+      const navRect = navElement.getBoundingClientRect();
+      const linkRect = targetLink.getBoundingClientRect();
+      
+      setUnderlineStyle({
+        left: linkRect.left - navRect.left,
+        width: linkRect.width,
+      });
+    }
+  }, [hoveredIndex, isNavHovered, currentIndex, pathname]);
 
   return (
     <>
@@ -33,22 +59,37 @@ export function Header() {
       {/* Navigation in bottom right */}
       <header className="w-full absolute bottom-0 right-0 z-30">
         <nav className="flex items-center justify-end w-full px-6 sm:px-8 md:px-14 pb-6 md:pb-8">
-          <div className="hidden md:flex gap-8 items-center">
-            {NAV_LINKS.map((link) => (
+          <div 
+            ref={navRef}
+            className="hidden md:flex gap-8 items-center relative px-4 py-2 -mx-4 -my-2"
+            onMouseEnter={() => setIsNavHovered(true)}
+            onMouseLeave={() => {
+              setIsNavHovered(false);
+              setHoveredIndex(null);
+            }}
+          >
+            {/* Sliding underline */}
+            <div
+              className="absolute bottom-0 h-0.5 transition-all duration-300 ease-in-out"
+              style={{
+                left: `${underlineStyle.left}px`,
+                width: `${underlineStyle.width}px`,
+                backgroundColor: isNightLightsPage ? 'var(--night-text)' : 'var(--color-underline)',
+              }}
+            />
+            
+            {NAV_LINKS.map((link, index) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`navbar-font text-base font-medium transition-colors ${
-                  pathname === link.href
-                    ? "underline underline-offset-6 decoration-2"
-                    : ""
-                }`}
+                ref={(el) => {
+                  linkRefs.current[index] = el;
+                }}
+                className="navbar-font text-base font-medium transition-colors relative"
                 style={{ 
                   color: isNightLightsPage ? 'var(--night-text)' : 'inherit',
-                  textDecorationColor: pathname === link.href 
-                    ? (isNightLightsPage ? 'var(--night-text)' : 'var(--color-underline)')
-                    : undefined
                 }}
+                onMouseEnter={() => setHoveredIndex(index)}
               >
                 {link.label}
               </Link>
