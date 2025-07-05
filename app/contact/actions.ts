@@ -10,12 +10,6 @@ export async function submitContactForm(prevState: FormState, formData: FormData
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const message = formData.get("message") as string;
-    const captcha = formData.get("captcha") as string;
-
-    // Simple captcha validation
-    if (captcha !== "5") {
-      return { error: "Incorrect captcha answer" };
-    }
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/contact`, {
       method: "POST",
@@ -32,7 +26,7 @@ export async function submitContactForm(prevState: FormState, formData: FormData
     }
 
     return { message: "Message sent successfully!" };
-  } catch (error) {
+  } catch {
     return { error: "Failed to send message" };
   }
 } 
