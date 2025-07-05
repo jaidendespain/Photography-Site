@@ -3,11 +3,6 @@ import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { submitContactForm } from "../actions";
 
-interface FormState {
-  message?: string;
-  error?: string;
-}
-
 function SubmitButton() {
   const { pending } = useFormStatus();
   
