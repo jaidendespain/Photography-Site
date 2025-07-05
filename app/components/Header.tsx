@@ -109,55 +109,56 @@ export function Header() {
               </m.div>
             ))}
           </div>
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
-            aria-label="Open menu"
-            onClick={() => setMenuOpen((v) => !v)}
-          >
-            <span 
-              className="block w-6 h-0.5 mb-1" 
-              style={{ backgroundColor: isNightLightsPage ? 'var(--night-text)' : '#000' }}
-            />
-            <span 
-              className="block w-6 h-0.5 mb-1" 
-              style={{ backgroundColor: isNightLightsPage ? 'var(--night-text)' : '#000' }}
-            />
-            <span 
-              className="block w-6 h-0.5" 
-              style={{ backgroundColor: isNightLightsPage ? 'var(--night-text)' : '#000' }}
-            />
-          </button>
         </nav>
-        {/* Mobile menu */}
-        {menuOpen && (
-          <div 
-            className="md:hidden border-t px-4 py-4"
-            style={{ 
-              backgroundColor: isNightLightsPage ? 'var(--night-bg)' : 'var(--color-bg)',
-              borderColor: isNightLightsPage ? '#404040' : '#e5e7eb'
-            }}
-          >
-            <div className="flex flex-col gap-4">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="navbar-font text-lg font-medium hover:underline underline-offset-4 transition-colors block"
-                  onClick={() => setMenuOpen(false)}
-                  style={{ 
-                    color: isNightLightsPage ? 'var(--night-text)' : 'inherit',
-                    padding: '8px 12px',
-                    margin: '-8px -12px',
-                  }}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
       </header>
+      {/* Hamburger menu button */}
+      <button
+        className="md:hidden p-2 rounded fixed bottom-6 right-6 z-[100]"
+        aria-label={menuOpen ? "Close menu" : "Open menu"}
+        onClick={() => setMenuOpen((v) => !v)}
+        type="button"
+      >
+        <span 
+          className="block w-6 h-0.5 mb-1" 
+          style={{ backgroundColor: isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)' }}
+        />
+        <span 
+          className="block w-6 h-0.5 mb-1" 
+          style={{ backgroundColor: isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)' }}
+        />
+        <span 
+          className="block w-6 h-0.5" 
+          style={{ backgroundColor: isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)' }}
+        />
+      </button>
+      {/* Mobile fullscreen menu overlay */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 z-50 flex flex-col items-center justify-end md:hidden pb-16"
+          style={{ backgroundColor: isNightLightsPage ? 'var(--night-bg)' : 'var(--color-bg)' }}
+          role="dialog"
+          aria-modal="true"
+          tabIndex={-1}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') setMenuOpen(false);
+          }}
+        >
+          <nav className="flex flex-col items-center gap-10 w-full">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="navbar-font text-2xl sm:text-5xl font-normal tracking-tight transition-colors"
+                style={{ color: isNightLightsPage ? 'var(--night-text)' : 'inherit'}}
+                onClick={() => setMenuOpen(false)}
+                tabIndex={0}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      )}
     </>
   );
 } 
