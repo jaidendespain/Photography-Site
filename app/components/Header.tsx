@@ -24,6 +24,7 @@ export function Header() {
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const overlayRef = useRef<HTMLDivElement>(null);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
   // Find current page index
   const currentIndex = NAV_LINKS.findIndex(link => link.href === pathname);
@@ -69,6 +70,10 @@ export function Header() {
       setIsOverlayVisible(false);
     }
   }, [menuOpen]);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   return (
     <>
@@ -142,18 +147,54 @@ export function Header() {
         onClick={() => setMenuOpen((v) => !v)}
         type="button"
       >
-        <span 
-          className="block w-6 h-0.5 mb-1" 
-          style={{ backgroundColor: isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)' }}
-        />
-        <span 
-          className="block w-6 h-0.5 mb-1" 
-          style={{ backgroundColor: isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)' }}
-        />
-        <span 
-          className="block w-6 h-0.5" 
-          style={{ backgroundColor: isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)' }}
-        />
+        {hasMounted ? (
+          <div className="relative size-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="absolute inset-0 size-6 transition-all duration-200"
+              style={{
+                color: isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)',
+                transform: menuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                opacity: menuOpen ? 0 : 1,
+              }}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="absolute inset-0 size-6 transition-all duration-200"
+              style={{
+                color: isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)',
+                transform: menuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                opacity: menuOpen ? 1 : 0,
+              }}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+            </svg>
+          </div>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="size-6"
+            style={{
+              color: isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)',
+            }}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+          </svg>
+        )}
       </button>
       {/* Mobile fullscreen menu overlay */}
       {menuOpen && (
@@ -168,31 +209,38 @@ export function Header() {
           }}
         >
           <nav className="flex flex-col items-center gap-10 w-full">
-            {NAV_LINKS.map((link) => (
-              <Link
+            {NAV_LINKS.map((link, index) => (
+              <m.div
                 key={link.href}
-                href={link.href}
-                className={`navbar-font text-2xl sm:text-5xl font-normal tracking-tight transition-colors ${pathname === link.href ? 'underline' : ''}`}
-                style={{ 
-                  color: isNightLightsPage ? 'var(--night-text)' : 'inherit',
-                  ...(pathname === link.href ? {
-                    textDecorationThickness: '2px',
-                    textUnderlineOffset: '10px',
-                  } : {})
-                }}
-                onClick={e => {
-                  e.preventDefault();
-                  if (pathname !== link.href) {
-                    setIsNavigating(true);
-                    router.push(link.href);
-                  } else {
-                    setMenuOpen(false);
-                  }
-                }}
-                tabIndex={0}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.08 * index }}
+                className="w-full flex justify-center"
               >
-                {link.label}
-              </Link>
+                <Link
+                  href={link.href}
+                  className={`navbar-font text-2xl sm:text-5xl font-normal tracking-tight transition-colors ${pathname === link.href ? 'underline' : ''}`}
+                  style={{ 
+                    color: isNightLightsPage ? 'var(--night-text)' : 'inherit',
+                    ...(pathname === link.href ? {
+                      textDecorationThickness: '2px',
+                      textUnderlineOffset: '10px',
+                    } : {})
+                  }}
+                  onClick={e => {
+                    e.preventDefault();
+                    if (pathname !== link.href) {
+                      setIsNavigating(true);
+                      router.push(link.href);
+                    } else {
+                      setMenuOpen(false);
+                    }
+                  }}
+                  tabIndex={0}
+                >
+                  {link.label}
+                </Link>
+              </m.div>
             ))}
           </nav>
         </div>
