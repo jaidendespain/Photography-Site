@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { m } from "framer-motion";
 
 const NAV_LINKS = [
@@ -16,10 +16,14 @@ export function Header() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isNavHovered, setIsNavHovered] = useState(false);
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
+  const [isNavigating, setIsNavigating] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const isNightLightsPage = pathname === "/night-lights";
   const navRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
   // Find current page index
   const currentIndex = NAV_LINKS.findIndex(link => link.href === pathname);
@@ -45,6 +49,26 @@ export function Header() {
       });
     }
   }, [hoveredIndex, isNavHovered, currentIndex, pathname]);
+
+  // Close menu after route transition completes
+  useEffect(() => {
+    if (isNavigating) {
+      setMenuOpen(false);
+      setIsNavigating(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
+  useEffect(() => {
+    if (menuOpen) {
+      setIsOverlayVisible(false);
+      // Next tick, set to true to trigger fade-in
+      const timeout = setTimeout(() => setIsOverlayVisible(true), 10);
+      return () => clearTimeout(timeout);
+    } else {
+      setIsOverlayVisible(false);
+    }
+  }, [menuOpen]);
 
   return (
     <>
@@ -134,8 +158,8 @@ export function Header() {
       {/* Mobile fullscreen menu overlay */}
       {menuOpen && (
         <div
-          className="fixed inset-0 z-50 flex flex-col items-center justify-end md:hidden pb-16"
-          style={{ backgroundColor: isNightLightsPage ? 'var(--night-bg)' : 'var(--color-bg)' }}
+          ref={overlayRef}
+          className={`fixed inset-0 z-50 flex flex-col items-center justify-end md:hidden pb-16 backdrop-blur ${isNightLightsPage ? 'bg-[var(--night-bg)]/10' : 'bg-white/10'} transition-opacity duration-200 ${isOverlayVisible ? 'opacity-100' : 'opacity-0'}`}
           role="dialog"
           aria-modal="true"
           tabIndex={-1}
@@ -148,9 +172,23 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="navbar-font text-2xl sm:text-5xl font-normal tracking-tight transition-colors"
-                style={{ color: isNightLightsPage ? 'var(--night-text)' : 'inherit'}}
-                onClick={() => setMenuOpen(false)}
+                className={`navbar-font text-2xl sm:text-5xl font-normal tracking-tight transition-colors ${pathname === link.href ? 'underline' : ''}`}
+                style={{ 
+                  color: isNightLightsPage ? 'var(--night-text)' : 'inherit',
+                  ...(pathname === link.href ? {
+                    textDecorationThickness: '2px',
+                    textUnderlineOffset: '10px',
+                  } : {})
+                }}
+                onClick={e => {
+                  e.preventDefault();
+                  if (pathname !== link.href) {
+                    setIsNavigating(true);
+                    router.push(link.href);
+                  } else {
+                    setMenuOpen(false);
+                  }
+                }}
                 tabIndex={0}
               >
                 {link.label}
