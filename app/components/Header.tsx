@@ -83,7 +83,7 @@ export function Header() {
           <Link 
             href="/" 
             className="title-font text-2xl tracking-tight"
-            style={{ color: isNightLightsPage ? 'var(--night-text)' : 'inherit' }}
+            style={{ color: isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)' }}
           >
             Jaiden Despain
           </Link>
@@ -109,7 +109,7 @@ export function Header() {
                 left: `${underlineStyle.left}px`,
                 width: `${underlineStyle.width}px`,
                 bottom: '5px',
-                backgroundColor: isNightLightsPage ? 'var(--night-text)' : 'var(--color-underline)',
+                backgroundColor: isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)',
               }}
             />
             
@@ -127,7 +127,7 @@ export function Header() {
                   }}
                   className="navbar-font text-base font-medium transition-colors relative block"
                   style={{ 
-                    color: isNightLightsPage ? 'var(--night-text)' : 'inherit',
+                    color: isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)',
                     padding: '8px 12px',
                     margin: '-8px -12px',
                   }}

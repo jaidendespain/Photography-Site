@@ -2,17 +2,13 @@
 
 /* Color variables for easy theming */
 :root {
-  --color-bg: var(--gray-100);
-  --color-text: #18181b;
+  --color-bg: #f9f9f9;
+  --color-text: #616161;
   --color-title: #111827;
-  --color-caption: #6b7280;
-  --background: #ffffff;
-  --foreground: #171717;
-  --color-underline: #616161; 
 
-  --gray-100: #f9f9f9;
   --night-bg: #171717;
-  --night-text: #f9f9f9;
+  --night-text: #a9a9a9;
+  --night-title: #f9f9f9;
 }
 
 body {
