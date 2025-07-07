@@ -7,9 +7,11 @@ interface ImageCarouselProps {
     src: string;
     alt: string;
   }>;
+  color?: string; // CSS variable for text color
+  borderColor?: string; // Tailwind border color class or CSS variable
 }
 
-export function ImageCarousel({ images }: ImageCarouselProps) {
+export function ImageCarousel({ images, color = 'var(--color-title)', borderColor = 'border-white' }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToNext = () => {
@@ -38,7 +40,7 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
           width={0}
           height={0}
           sizes="(max-width: 768px) 90vw, 50vw"
-          className="w-auto h-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-4xl max-h-[400px] sm:max-h-[500px] md:max-h-[632px] object-contain border border-[8px] sm:border-[12px] md:border-[15px] lg:border-[20px] border-white shadow-md"
+          className={`w-auto h-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-4xl max-h-[300px] sm:max-h-[400px] md:max-h-[632px] object-contain border border-[8px] sm:border-[12px] md:border-[15px] lg:border-[20px] ${borderColor} shadow-md`}
           priority
         />
       </div>
@@ -46,8 +48,9 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
       {/* Previous Arrow */}
       <button
         onClick={goToPrevious}
-        className="fixed bottom-25 left-1/2 transform -translate-x-1/2 -ml-16 -mb-[7px] p-2 z-30"
+        className="fixed bottom-25 left-1/2 transform -translate-x-1/2 -ml-16 -mb-[7px] p-2 z-30 cursor-pointer"
         aria-label="Previous image"
+        style={{ color }}
       >
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
@@ -56,6 +59,7 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
           strokeWidth="1.5" 
           stroke="currentColor" 
           className="size-6"
+          style={{ color }}
         >
           <path 
             strokeLinecap="round" 
@@ -66,15 +70,16 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
       </button>
 
       {/* Image Counter */}
-      <div className="fixed bottom-25 left-0 right-0 flex justify-center text-black text-sm">
+      <div className="fixed bottom-25 left-0 right-0 flex justify-center text-sm" style={{ color }}>
         {currentIndex + 1} / {images.length}
       </div>
 
       {/* Next Arrow */}
       <button
         onClick={goToNext}
-        className="fixed bottom-25 left-1/2 transform -translate-x-1/2 ml-15 -mb-[7px] p-2 z-30"
+        className="fixed bottom-25 left-1/2 transform -translate-x-1/2 ml-15 -mb-[7px] p-2 z-30 cursor-pointer"
         aria-label="Next image"
+        style={{ color }}
       >
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
@@ -83,6 +88,7 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
           strokeWidth="1.5" 
           stroke="currentColor" 
           className="size-6"
+          style={{ color }}
         >
           <path 
             strokeLinecap="round" 

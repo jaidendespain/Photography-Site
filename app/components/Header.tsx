@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { href: "/", label: "Entry" },
   { href: "/infauxred", label: "Infauxred" },
   { href: "/night-lights", label: "Night Lights" },
-  { href: "/contact", label: "Contact" },
+  { href: "/angelica", label: "Angelica" },
 ];
 
 export function Header() {
@@ -19,7 +19,7 @@ export function Header() {
   const [isNavigating, setIsNavigating] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const isNightLightsPage = pathname === "/night-lights";
+  const isNightLightsPage = pathname === "/night-lights" || pathname === "/angelica";
   const navRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -157,7 +157,7 @@ export function Header() {
               stroke="currentColor"
               className="absolute inset-0 size-6 transition-all duration-200"
               style={{
-                color: isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)',
+                color: isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)',
                 transform: menuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                 opacity: menuOpen ? 0 : 1,
               }}
@@ -172,7 +172,7 @@ export function Header() {
               stroke="currentColor"
               className="absolute inset-0 size-6 transition-all duration-200"
               style={{
-                color: isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)',
+                color: isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)',
                 transform: menuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                 opacity: menuOpen ? 1 : 0,
               }}
@@ -189,7 +189,7 @@ export function Header() {
             stroke="currentColor"
             className="size-6"
             style={{
-              color: hasMounted ? (isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)') : 'var(--color-text)',
+              color: hasMounted ? (isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)') : 'var(--color-title)',
             }}
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />

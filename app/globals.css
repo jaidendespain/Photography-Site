@@ -6,9 +6,11 @@
   --color-text: #616161;
   --color-title: #111827;
 
-  --night-bg: #171717;
+  --night-bg: #101010;
   --night-text: #a9a9a9;
   --night-title: #f9f9f9;
+
+  --ica-bg: #ff007f;
 }
 
 body {

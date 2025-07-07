@@ -14,8 +14,8 @@ const INFAUXRED_IMAGES = [
 export default function InfauxredPage() {
   return (
     <section className="w-full min-h-screen flex flex-col items-center justify-center px-4 py-8">
-      <div className="w-full max-w-6xl">
-        <ImageCarousel images={INFAUXRED_IMAGES} />
+      <div className="w-full max-w-6xl text-center">
+        <ImageCarousel images={INFAUXRED_IMAGES} color="var(--color-text)"/>
       </div>
     </section>
   );
