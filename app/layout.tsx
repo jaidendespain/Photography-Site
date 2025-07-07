@@ -5,25 +5,25 @@ import { MotionProvider } from "./components/MotionProvider";
 
 export const metadata: Metadata = {
   title: {
-    default: "Jaiden Despain - Photography Portfolio",
+    default: "Jaiden Despain",
     template: "%s | Jaiden Despain"
   },
-  description: "A photography portfolio showcasing infrared photography, night photography, and visual storytelling.",
-  keywords: ["photography", "infrared", "night photography", "portfolio", "Jaiden Despain"],
+  description: "photo gallery",
+  keywords: ["photography", "infrared", "night photography", "Jaiden Despain"],
   authors: [{ name: "Jaiden Despain" }],
   creator: "Jaiden Despain",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://jaidendespa.in",
-    title: "Jaiden Despain - Photography Portfolio",
-    description: "A photography portfolio showcasing infrared photography, night photography, and visual storytelling.",
+    title: "Jaiden Despain",
+    description: "photo gallery",
     siteName: "Jaiden Despain",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jaiden Despain - Photography Portfolio",
-    description: "A photography portfolio showcasing infrared photography, night photography, and visual storytelling.",
+    title: "Jaiden Despain",
+    description: "photo gallery",
   },
   robots: {
     index: true,

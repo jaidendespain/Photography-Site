@@ -83,7 +83,7 @@ export function Header() {
           <Link 
             href="/" 
             className="title-font text-2xl tracking-tight"
-            style={{ color: isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)' }}
+            style={{ color: hasMounted ? (isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)') : 'var(--color-title)' }}
           >
             Jaiden Despain
           </Link>
@@ -109,7 +109,7 @@ export function Header() {
                 left: `${underlineStyle.left}px`,
                 width: `${underlineStyle.width}px`,
                 bottom: '5px',
-                backgroundColor: isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)',
+                backgroundColor: hasMounted ? (isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)') : 'var(--color-title)',
               }}
             />
             
@@ -127,7 +127,7 @@ export function Header() {
                   }}
                   className="navbar-font text-base font-medium transition-colors relative block"
                   style={{ 
-                    color: isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)',
+                    color: hasMounted ? (isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)') : 'var(--color-title)',
                     padding: '8px 12px',
                     margin: '-8px -12px',
                   }}
@@ -189,7 +189,7 @@ export function Header() {
             stroke="currentColor"
             className="size-6"
             style={{
-              color: isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)',
+              color: hasMounted ? (isNightLightsPage ? 'var(--night-text)' : 'var(--color-text)') : 'var(--color-text)',
             }}
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
@@ -221,7 +221,7 @@ export function Header() {
                   href={link.href}
                   className={`navbar-font text-2xl sm:text-5xl font-normal tracking-tight transition-colors ${pathname === link.href ? 'underline' : ''}`}
                   style={{ 
-                    color: isNightLightsPage ? 'var(--night-text)' : 'inherit',
+                    color: hasMounted ? (isNightLightsPage ? 'var(--night-title)' : 'var(--color-title)') : 'var(--color-title)',
                     ...(pathname === link.href ? {
                       textDecorationThickness: '2px',
                       textUnderlineOffset: '10px',
